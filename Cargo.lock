@@ -472,6 +472,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "backend"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytes",
+ "chrono",
+ "regex",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "sha1_smol",
+ "thiserror 2.0.16",
+ "tokio",
+]
+
+[[package]]
 name = "backtrace"
 version = "0.3.75"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2747,8 +2763,8 @@ name = "lychee-launcher"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "backend",
  "bytes",
- "pit",
  "serde_json",
  "slint",
  "slint-build",
@@ -3532,22 +3548,6 @@ dependencies = [
  "atomic-waker",
  "fastrand",
  "futures-io",
-]
-
-[[package]]
-name = "pit"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "bytes",
- "chrono",
- "regex",
- "reqwest",
- "serde",
- "serde_json",
- "sha1_smol",
- "thiserror 2.0.16",
- "tokio",
 ]
 
 [[package]]

@@ -1,0 +1,16 @@
+[package]
+name = "lychee-launcher"
+version = "0.1.0"
+edition.workspace = true
+license = "GPL-3.0-or-later"
+
+[dependencies]
+backend.workspace = true
+slint = "1.12.1"
+serde_json.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "fs"] }
+anyhow.workspace = true
+bytes.workspace = true
+
+[build-dependencies]
+slint-build = "1.12.1"

@@ -6,8 +6,7 @@ use std::{
     vec,
 };
 
-use bytes::Bytes;
-use pit::{
+use backend::{
     http::HttpClient,
     piston::{
         self,
@@ -15,6 +14,7 @@ use pit::{
         version::{FetchedAssetIndex, FetchedVersion, VersionManifest},
     },
 };
+use bytes::Bytes;
 use tokio::{io::AsyncWriteExt, time::Instant};
 
 slint::include_modules!();
@@ -160,8 +160,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Command::new("java")
                         .args(arguments.jvm)
                         .arg(fetched_version.main_class)
-                        .arg("-jar")
-                        .arg("client.jar")
                         .args(arguments.game)
                         .current_dir(std::env::current_exe().unwrap().parent().unwrap())
                         .spawn()

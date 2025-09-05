@@ -11,7 +11,6 @@ pub struct Rule {
 }
 
 impl Rule {
-    // TODO: Handle features
     pub fn test(&self, present_features: Features) -> bool {
         if self
             .features
