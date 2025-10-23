@@ -1,4 +1,4 @@
-use crate::piston::rule::Rule;
+use crate::rule::Rule;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]

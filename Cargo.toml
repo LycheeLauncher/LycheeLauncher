@@ -1,12 +1,14 @@
 [workspace]
-resolver = "3"
-members = ["crates/backend", "crates/lychee-launcher"]
+resolver = "2"
+members = ["crates/http", "crates/piston", "crates/lychee-launcher"]
+default-members = ["crates/lychee-launcher"]
 
 [workspace.package]
 edition = "2024"
 
 [workspace.dependencies]
-backend = { path = "crates/backend" }
+http = { path = "crates/http" }
+piston = { path = "crates/piston" }
 lychee-launcher = { path = "crates/lychee-launcher" }
 
 bytes = "1.10.1"
@@ -16,4 +18,11 @@ tokio = { version = "1.47.1", default-features = false, features = ["macros"] }
 anyhow = "1.0.99"
 
 [profile.release]
+incremental = true
 lto = true
+codegen-units = 1
+
+[profile.release-fast]
+inherits = "release"
+lto = "thin"
+codegen-units = 16

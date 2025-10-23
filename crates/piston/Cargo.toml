@@ -1,22 +1,19 @@
 [package]
-name = "backend"
+name = "piston"
 version = "0.1.0"
 edition.workspace = true
 license = "MIT"
 
 [dependencies]
-reqwest = "0.12.23"
 serde.workspace = true
-serde_json.workspace = true
 chrono = { version = "0.4.41", default-features = false, features = [
     "alloc",
     "serde",
 ] }
-bytes.workspace = true
-sha1_smol = { version = "1.0.1", features = ["std"] }
 regex = "1.11.2"
-thiserror = "2.0.16"
 
 [dev-dependencies]
+http.workspace = true
+serde_json.workspace = true
 anyhow.workspace = true
 tokio.workspace = true

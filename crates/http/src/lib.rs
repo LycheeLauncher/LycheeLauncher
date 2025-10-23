@@ -1,25 +1,24 @@
 use bytes::Bytes;
-use reqwest::{Client, Response};
+use futures_util::StreamExt;
+use reqwest::Response;
 
 #[derive(thiserror::Error, Debug)]
 pub enum DownloadError {
-    #[error(transparent)]
-    Json(#[from] serde_json::Error),
     #[error(transparent)]
     Http(#[from] reqwest::Error),
     #[error("{url} did not match expected hash of {expected}")]
     UnexpectedHash { url: String, expected: String },
 }
 
-pub struct HttpClient {
-    inner: Client,
+pub struct Client {
+    inner: reqwest::Client,
 }
 
-impl HttpClient {
+impl Client {
     // TODO: Proper client
     pub fn new() -> Self {
         Self {
-            inner: Client::new(),
+            inner: reqwest::Client::new(),
         }
     }
 
@@ -32,15 +31,17 @@ impl HttpClient {
     }
 
     pub async fn download(&self, url: &str, sha1: Option<&str>) -> Result<Bytes, DownloadError> {
-        let mut response = self.send(url).await?;
+        let mut stream = self.send(url).await?.bytes_stream();
 
         let mut data = Vec::new();
         let mut digest = sha1.map(|_| sha1_smol::Sha1::new());
 
-        while let Some(ref item) = response.chunk().await? {
-            data.extend(item);
+        while let Some(chunk) = stream.next().await {
+            let chunk = &chunk?;
+
+            data.extend(chunk);
             if let Some(digest) = digest.as_mut() {
-                digest.update(item);
+                digest.update(chunk);
             }
         }
 

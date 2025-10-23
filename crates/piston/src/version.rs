@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::piston::{argument::Arguments, library::Library};
+use crate::{argument::Arguments, library::Library};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize, Serializer};
 
@@ -142,14 +142,14 @@ fn serialize_date<S: Serializer>(date: &DateTime<Utc>, serializer: S) -> Result<
 
 #[cfg(test)]
 mod tests {
-    use crate::{http::HttpClient, piston::VERSION_MANIFEST_URL};
+    use crate::VERSION_MANIFEST_URL;
 
     use super::*;
     use anyhow::{Result, anyhow};
 
     #[tokio::test]
     async fn download_version_manifest() -> Result<()> {
-        let client = HttpClient::new();
+        let client = http::Client::new();
         serde_json::from_slice::<VersionManifest>(
             &client.download(VERSION_MANIFEST_URL, None).await?,
         )?;
@@ -158,7 +158,7 @@ mod tests {
 
     #[tokio::test]
     async fn download_versions() -> Result<()> {
-        let client = HttpClient::new();
+        let client = http::Client::new();
 
         let version_manifest = serde_json::from_slice::<VersionManifest>(
             &client.download(VERSION_MANIFEST_URL, None).await?,
@@ -175,7 +175,7 @@ mod tests {
 
     #[tokio::test]
     async fn download_latest_asset_index() -> Result<()> {
-        let client = HttpClient::new();
+        let client = http::Client::new();
 
         let version_manifest = serde_json::from_slice::<VersionManifest>(
             &client.download(VERSION_MANIFEST_URL, None).await?,

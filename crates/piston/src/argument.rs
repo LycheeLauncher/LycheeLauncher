@@ -3,7 +3,7 @@ use std::sync::LazyLock;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 
-use crate::piston::rule::{Features, Rule};
+use crate::rule::{Features, Rule};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(untagged)]
